@@ -1,13 +1,51 @@
 ---
 title: "randomization-test"
-format: revealjs
-editor: visual
+format: html
+
 ---
 
 ## Intro
 
 blah blah blah
 
-## Bullets
+## code
+
+```
+library(blockrand)
+library(dplyr)
+library(ggplot2)
+
+# Create block randomization allocation sequence using blockrand package
+block_rand <- blockrand(n = 30, # target number (example value)
+                        num.levels = 2, # number of treatment arms
+                        levels = c("Treatment", "Control"), # arm names
+                        block.sizes = c(5), # vector of possible block sizes (here, just 5)
+                        block.prefix = "Block") # block names prefix
+
+# Add sequential position within each block
+block_rand <- block_rand %>%
+  group_by(block.id) %>%
+  mutate(position_in_block = row_number()) %>%
+  ungroup()
+
+# Create visualization of the block randomization
+ggplot(block_rand, aes(x = position_in_block, y = factor(block.id, levels =
+                                                           rev(unique(block.id))))) +
+  geom_tile(aes(fill = treatment), color = 'gray30', width = 0.9, height = 0.9) +
+  geom_text(aes(label = id), color = "black", size = 3) +
+  scale_fill_brewer(palette = "Set1", name = "Treatment") +
+  labs(title = "Block randomization of samples by block",
+       subtitle = paste(length(unique(block_rand$block.id)), "blocks with",
+                        unique(block_rand$block.size),
+                        "samples per block, randomized to",
+                        length(unique(block_rand$treatment)), "treatments"),
+       x = "Treatment sequence", y = "Block") + # Remove x-axis label
+  theme_minimal() +
+  theme(
+    panel.grid = element_blank(),
+    axis.text.x = element_blank(), # Remove x-axis text
+    axis.ticks.x = element_blank() # Remove x-axis ticks
+  )
 
 
+```
