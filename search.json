@@ -1,0 +1,16 @@
+[
+  {
+    "objectID": "main.html#intro",
+    "href": "main.html#intro",
+    "title": "randomization-test",
+    "section": "Intro",
+    "text": "Intro\nblah blah blah"
+  },
+  {
+    "objectID": "main.html#code",
+    "href": "main.html#code",
+    "title": "randomization-test",
+    "section": "code",
+    "text": "code\nlibrary(blockrand)\nlibrary(dplyr)\nlibrary(ggplot2)\n\n# Create block randomization allocation sequence using blockrand package\nblock_rand &lt;- blockrand(n = 30, # target number (example value)\n                        num.levels = 2, # number of treatment arms\n                        levels = c(\"Treatment\", \"Control\"), # arm names\n                        block.sizes = c(5), # vector of possible block sizes (here, just 5)\n                        block.prefix = \"Block\") # block names prefix\n\n# Add sequential position within each block\nblock_rand &lt;- block_rand %&gt;%\n  group_by(block.id) %&gt;%\n  mutate(position_in_block = row_number()) %&gt;%\n  ungroup()\n\n# Create visualization of the block randomization\nggplot(block_rand, aes(x = position_in_block, y = factor(block.id, levels =\n                                                           rev(unique(block.id))))) +\n  geom_tile(aes(fill = treatment), color = 'gray30', width = 0.9, height = 0.9) +\n  geom_text(aes(label = id), color = \"black\", size = 3) +\n  scale_fill_brewer(palette = \"Set1\", name = \"Treatment\") +\n  labs(title = \"Block randomization of samples by block\",\n       subtitle = paste(length(unique(block_rand$block.id)), \"blocks with\",\n                        unique(block_rand$block.size),\n                        \"samples per block, randomized to\",\n                        length(unique(block_rand$treatment)), \"treatments\"),\n       x = \"Treatment sequence\", y = \"Block\") + # Remove x-axis label\n  theme_minimal() +\n  theme(\n    panel.grid = element_blank(),\n    axis.text.x = element_blank(), # Remove x-axis text\n    axis.ticks.x = element_blank() # Remove x-axis ticks\n  )"
+  }
+]
