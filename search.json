@@ -1,10 +1,17 @@
 [
   {
+    "objectID": "main.html",
+    "href": "main.html",
+    "title": "randomization-test",
+    "section": "",
+    "text": "blah blah blah"
+  },
+  {
     "objectID": "main.html#intro",
     "href": "main.html#intro",
     "title": "randomization-test",
-    "section": "Intro",
-    "text": "Intro\nblah blah blah"
+    "section": "",
+    "text": "blah blah blah"
   },
   {
     "objectID": "main.html#code",
