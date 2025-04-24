@@ -1,7 +1,8 @@
 ---
 title: "randomization-test"
 format: html
-
+filters:
+  - webr
 ---
 
 ## Intro
@@ -10,7 +11,7 @@ blah blah blah
 
 ## code
 
-```
+```{webr-r}
 library(blockrand)
 library(dplyr)
 library(ggplot2)
