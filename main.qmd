@@ -1,0 +1,13 @@
+---
+title: "randomization-test"
+format: revealjs
+editor: visual
+---
+
+## Intro
+
+blah blah blah
+
+## Bullets
+
+
